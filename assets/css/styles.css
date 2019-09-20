@@ -1,3 +1,9 @@
 body {
     background-color: darkmagenta;
 }
+
+img {
+    width: 25%;
+    /* padding-right: 2%; */
+    /* padding-top: 1%; */
+}

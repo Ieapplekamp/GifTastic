@@ -1,47 +1,31 @@
-// something to grab the rating of the gif 
-// have the gifs appear as image and change gifs on click n vice versa
-// -- be sure to clear the old items if they click on a new button 
-
-
-
-
-// 3. When the user clicks on a button, the page should grab 10 static, non-animated gif images from the GIPHY API and place them on the page.
-
-// 4. When the user clicks one of the still GIPHY images, the gif should animate. If the user clicks the gif again, it should stop playing.
-
-// 5. Under every gif, display its rating (PG, G, so on).
-//    * This data is provided by the GIPHY API.
-//    * Only once you get images displaying with button presses should you move on to the next step.
-
-// 6. Add a form to your page that takes a value from a user input box and adds it to your `topics` array. Then make a function call that takes each topic in the array and remakes the buttons on the page.
-
-// everything goes in this guy 
 $(document).ready(function () {
-    // k2mFEQxVnbiikmEUFqyX8cKLOTkglRzd (API KEY) - valid
 
+    //globes
     var topics = ['Raccoon Dog', 'Fennec Fox', 'Quoll', 'Serval'];
 
+    //function 1
     function initialButtons() {
         for (var i = 0; i < topics.length; i++) {
             var a = $("<button>");
             a.addClass('giphy');
             a.attr("src", topics[i]);
             a.text(topics[i]);
-            $('#gifs').append(a);
+            $('#buttons').append(a);
         }
     }
+    // calls function 1
     initialButtons();
-
+   
+    // function 2 ajaz
     function ajaxFunk() {
         //e.preventDefault();
+        $('#newGifs').empty();
         topics = $(this).attr("src");
         console.log(topics);
 
-        var queryURL = "https://api.giphy.com/v1/gifs/search?api_key=k2mFEQxVnbiikmEUFqyX8cKLOTkglRzd&q=" + topics + "&limit=25&offset=0&rating=G&lang=en"
+        var queryURL = "https://api.giphy.com/v1/gifs/search?api_key=k2mFEQxVnbiikmEUFqyX8cKLOTkglRzd&q=" + topics + "&limit=15&offset=0&rating=G&lang=en"
         //note the rating ^
-        console.log(queryURL);
-        
-        
+        // the offset can change the gifs loaded
 
 
         $.ajax({
@@ -51,24 +35,52 @@ $(document).ready(function () {
             
             var result = response.data;
             
-            console.log(result);
             for (var i = 0; i < result.length; i++) {
+
+                var ratingTag = $('<p>').text('Rating: ' + result[i].rating)
                 var image = $('<img>')
-                var imgURL = result[i].images.fixed_width.url;
-                console.log(imgURL);
-                image.attr('src', imgURL);
+
+                var imgURL = result[i].images.original_still.url;
+                var gifURL = result[i].images.fixed_width.url;
                 
+                image.attr('data-image', imgURL);
+                image.attr('data-status', 'still');
+                image.attr("data-gif", gifURL)
+                image.attr('src', imgURL);
+
+                $('#newGifs').append(ratingTag);
                 $('#newGifs').append(image);
 
             }
-            
-            
-            
+            // function 4
+            $('img').on('click', function () {
+
+                var status = $(this).attr('data-status');
+                
+                if (status === 'still') {
+
+                    var newURL = $(this).attr('data-gif');
+                    $(this).attr('src', newURL);
+                    
+                    $(this).attr('data-status', 'animated');
+                    console.log(status);
+                   
+                } else {
+                     
+                    var newURL = $(this).attr('data-image');
+                    $(this).attr('src', newURL);
+                    $(this).attr('data-status', 'still');
+                    console.log(status)
+
+                }
+
+            })
 
         })
 
     }
 
+    // function 3
     $("#find-gif").on('click', function (event) {
         event.preventDefault();
         var search = $('#gif-input').val().trim();
@@ -76,24 +88,10 @@ $(document).ready(function () {
         topics.push(search);
         initialButtons();
     })
-    
-    // function displayGifs() {
 
-    // }
     
-    
+
+    // calls function 2
     $(document).on('click', ".giphy", ajaxFunk);
-
-
-
-
-
-
-
-
-
-
-
-
 
 })
