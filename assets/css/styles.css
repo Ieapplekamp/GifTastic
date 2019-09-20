@@ -1,9 +1,25 @@
 body {
-    background-color: darkmagenta;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 500;
+    background: linear-gradient(90deg, #e66465, #9198e5);    
 }
-
 img {
-    width: 25%;
-    /* padding-right: 2%; */
-    /* padding-top: 1%; */
+    width: 100%;
+}
+label {
+    display: block;
+    font-family: 'Racing Sans One', cursive;
+    font-weight: 300;
+    font-size: 3em;
+}
+button {
+    margin-right: 1%;
+    margin-bottom: 2%;
+}
+#newGifs {
+    margin-left: 1.5%;
+    margin-right: 1.5%;
+}
+#find-gif {
+    margin-left: 15px;
 }
