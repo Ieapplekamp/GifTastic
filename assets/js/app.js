@@ -21,7 +21,7 @@ $(document).ready(function () {
         
         topics = $(this).attr("src");
         
-        var queryURL = "https://api.giphy.com/v1/gifs/search?api_key=k2mFEQxVnbiikmEUFqyX8cKLOTkglRzd&q=" + topics + "&limit=15&offset=0&rating=R&PG&G&lang=en"
+        var queryURL = "https://api.giphy.com/v1/gifs/search?api_key=k2mFEQxVnbiikmEUFqyX8cKLOTkglRzd&q=" + topics + "&limit=15&offset=0&rating=R&PG&G&lang=en" // leaving in the R rating incase my users are spicy 
         //note the rating ^
 
         $.ajax({
